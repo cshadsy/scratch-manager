@@ -13,9 +13,13 @@ def main_menu(stdscr):
     curses.curs_set(0)
     current_row = 0
 
+    header = "==== Scratch Manager ===="
     while True:
         stdscr.clear()
         h, w = stdscr.getmaxyx()
+        stdscr.attron(curses.A_BOLD)
+        stdscr.addstr(0, w//2 - len(header)//2, header)
+        stdscr.attroff(curses.A_BOLD)
         for idx, option in enumerate(MENU_OPTIONS):
             x = w//2 - len(option)//2
             y = h//2 - len(MENU_OPTIONS)//2 + idx

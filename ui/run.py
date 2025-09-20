@@ -31,9 +31,11 @@ def run_installation(stdscr, folder):
 def run_menu(stdscr):
     curses.curs_set(0)
     installations = get_installations()
+    header = "==== Scratch Manager: Run Installation ===="
     if not installations:
-        stdscr.addstr(0, 0, "No installations found.")
-        stdscr.addstr(2, 0, "Press any key to return.")
+        stdscr.addstr(0, 0, header)
+        stdscr.addstr(2, 0, "No installations found.")
+        stdscr.addstr(4, 0, "Press any key to return.")
         stdscr.refresh()
         stdscr.getch()
         return
@@ -41,6 +43,9 @@ def run_menu(stdscr):
     while True:
         stdscr.clear()
         h, w = stdscr.getmaxyx()
+        stdscr.attron(curses.A_BOLD)
+        stdscr.addstr(0, w//2 - len(header)//2, header)
+        stdscr.attroff(curses.A_BOLD)
         for idx, folder in enumerate(installations):
             x = w//2 - len(folder)//2
             y = h//2 - len(installations)//2 + idx
@@ -58,5 +63,5 @@ def run_menu(stdscr):
             current_row += 1
         elif key in [curses.KEY_ENTER, ord('\n')]:
             run_installation(stdscr, installations[current_row])
-        elif key == 27:  # escape to exit submenu
+        elif key == 27:  # ESC to exit submenu
             break
